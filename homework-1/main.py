@@ -5,11 +5,11 @@ from csv import DictReader
 PATH = ['north_data/customers_data.csv', 'north_data/employees_data.csv', 'north_data/orders_data.csv']
 
 
-def main():
+def main(path_list: list):
     try:
         with psycopg2.connect(host='localhost', database='north', user='postgres', password='12345') as conn:
             with conn.cursor() as cur:
-                for path in PATH:
+                for path in path_list:
                     for dict_ in DictReader(open(path, encoding='cp1251')):
                         if path == 'north_data/customers_data.csv':
                             dict_['company_name'] = dict_['company_name'].replace("'", '"')
@@ -29,4 +29,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(PATH)
